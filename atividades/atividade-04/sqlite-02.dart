@@ -115,15 +115,21 @@ void main() async {
   final db = AlunoDatabase.instance;
 
   // Inserir um aluno
-  final aluno = Aluno(nome: 'João', dataNascimento: '2000-01-01');
-  int alunoId = await db.insertAluno(aluno);
+  final aluno1 = Aluno(nome: 'Pablo', dataNascimento: '1989-05-25');
+  int alunoId1 = await db.insertAluno(aluno1);
+
+  final aluno2 = Aluno(nome: 'Márcia', dataNascimento: '1820-08-17');
+  int alunoId2 = await db.insertAluno(aluno2);
 
   // Buscar um aluno pelo ID
-  Aluno retrievedAluno = await db.getAluno(alunoId);
+  Aluno retrievedAluno = await db.getAluno(alunoId1);
+  print('Aluno recuperado: $retrievedAluno');
+
+  Aluno retrievedAluno = await db.getAluno(alunoId2);
   print('Aluno recuperado: $retrievedAluno');
 
   // Atualizar os dados de um aluno
-  retrievedAluno.nome = 'João da Silva';
+  retrievedAluno.nome = 'Márcia Fonseca';
   await db.updateAluno(retrievedAluno);
 
   // Buscar todos os alunos
