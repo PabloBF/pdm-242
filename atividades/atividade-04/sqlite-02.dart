@@ -125,7 +125,7 @@ void main() async {
   Aluno retrievedAluno = await db.getAluno(alunoId1);
   print('Aluno recuperado: $retrievedAluno');
 
-  Aluno retrievedAluno = await db.getAluno(alunoId2);
+  retrievedAluno = await db.getAluno(alunoId2);
   print('Aluno recuperado: $retrievedAluno');
 
   // Atualizar os dados de um aluno
