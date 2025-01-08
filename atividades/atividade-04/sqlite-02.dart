@@ -1,15 +1,12 @@
-//
-//
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class Aluno {
-  int id;
+  int? id;
   String nome;
   String dataNascimento;
 
-  Aluno({this.id, this.nome, this.dataNascimento});
+  Aluno({this.id, required this.nome, required this.dataNascimento});
 
   Map<String, dynamic> toMap() {
     return {
@@ -18,20 +15,25 @@ class Aluno {
       'data_nascimento': dataNascimento,
     };
   }
+
+  @override
+  String toString() {
+    return 'Aluno{id: $id, nome: $nome, dataNascimento: $dataNascimento}';
+  }
 }
 
 class AlunoDatabase {
   static final AlunoDatabase instance = AlunoDatabase._init();
 
-  static Database _database;
+  static Database? _database;
 
   AlunoDatabase._init();
 
   Future<Database> get database async {
-    if (_database != null) return _database;
+    if (_database != null) return _database!;
 
     _database = await _initDB('aluno.db');
-    return _database;
+    return _database!;
   }
 
   Future<Database> _initDB(String dbName) async {
@@ -60,7 +62,7 @@ class AlunoDatabase {
     return await db.insert('TB_ALUNOS', aluno.toMap());
   }
 
-  Future<Aluno> getAluno(int id) async {
+  Future<Aluno?> getAluno(int id) async {
     final db = await database;
     final maps = await db.query(
       'TB_ALUNOS',
@@ -71,9 +73,9 @@ class AlunoDatabase {
     if (maps.isEmpty) return null;
 
     return Aluno(
-      id: maps.first['id'],
-      nome: maps.first['nome'],
-      dataNascimento: maps.first['data_nascimento'],
+      id: maps.first['id'] as int,
+      nome: maps.first['nome'] as String,
+      dataNascimento: maps.first['data_nascimento'] as String,
     );
   }
 
@@ -83,9 +85,9 @@ class AlunoDatabase {
 
     return List.generate(maps.length, (i) {
       return Aluno(
-        id: maps[i]['id'],
-        nome: maps[i]['nome'],
-        dataNascimento: maps[i]['data_nascimento'],
+        id: maps[i]['id'] as int,
+        nome: maps[i]['nome'] as String,
+        dataNascimento: maps[i]['data_nascimento'] as String,
       );
     });
   }
@@ -114,28 +116,33 @@ void main() async {
   // Inicializar o banco de dados
   final db = AlunoDatabase.instance;
 
-  // Inserir um aluno
+  // Inserir alunos
   final aluno1 = Aluno(nome: 'Pablo', dataNascimento: '1989-05-25');
-  int alunoId1 = await db.insertAluno(aluno1);
+  final alunoId1 = await db.insertAluno(aluno1);
 
   final aluno2 = Aluno(nome: 'Márcia', dataNascimento: '1820-08-17');
-  int alunoId2 = await db.insertAluno(aluno2);
+  final alunoId2 = await db.insertAluno(aluno2);
 
-  // Buscar um aluno pelo ID
-  Aluno retrievedAluno = await db.getAluno(alunoId1);
-  print('Aluno recuperado: $retrievedAluno');
+  // Buscar aluno pelo ID
+  Aluno? retrievedAluno = await db.getAluno(alunoId1);
+  print('Aluno recuperado: ${retrievedAluno ?? "Não encontrado"}');
 
   retrievedAluno = await db.getAluno(alunoId2);
-  print('Aluno recuperado: $retrievedAluno');
+  print('Aluno recuperado: ${retrievedAluno ?? "Não encontrado"}');
 
-  // Atualizar os dados de um aluno
-  retrievedAluno.nome = 'Márcia Fonseca';
-  await db.updateAluno(retrievedAluno);
+  // Atualizar dados de um aluno
+  if (retrievedAluno != null) {
+    retrievedAluno.nome = 'Márcia Fonseca';
+    await db.updateAluno(retrievedAluno);
+  }
 
   // Buscar todos os alunos
   List<Aluno> alunos = await db.getAllAlunos();
   print('Todos os alunos: $alunos');
 
   // Deletar um aluno
-  await db.deleteAluno(alunoId);
+  if (alunoId1 != null) {
+    await db.deleteAluno(alunoId1);
+    print('Aluno com ID $alunoId1 deletado.');
+  }
 }
