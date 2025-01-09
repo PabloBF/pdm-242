@@ -1,5 +1,4 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:sqlite3/sqlite3.dart';
 
 class Aluno {
   int? id;
@@ -23,126 +22,109 @@ class Aluno {
 }
 
 class AlunoDatabase {
-  static final AlunoDatabase instance = AlunoDatabase._init();
+  final Database db;
 
-  static Database? _database;
+  AlunoDatabase._(this.db);
 
-  AlunoDatabase._init();
-
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-
-    _database = await _initDB('aluno.db');
-    return _database!;
-  }
-
-  Future<Database> _initDB(String dbName) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, dbName);
-
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDB,
-    );
-  }
-
-  Future<void> _createDB(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE TB_ALUNOS (
+  static AlunoDatabase initialize(String path) {
+    final db = sqlite3.open(path);
+    db.execute('''
+      CREATE TABLE IF NOT EXISTS tb_alunos (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         data_nascimento TEXT NOT NULL
       )
     ''');
+    return AlunoDatabase._(db);
   }
 
-  Future<int> insertAluno(Aluno aluno) async {
-    final db = await database;
-    return await db.insert('TB_ALUNOS', aluno.toMap());
+  void clearTable() {
+    db.execute('DELETE FROM tb_alunos'); // Limpa todos os dados da tabela
+    db.execute('VACUUM'); // Reorganiza o banco de dados
+    print('Tabela limpa.');
   }
 
-  Future<Aluno?> getAluno(int id) async {
-    final db = await database;
-    final maps = await db.query(
-      'TB_ALUNOS',
-      where: 'id = ?',
-      whereArgs: [id],
+  int insertAluno(Aluno aluno) {
+    db.execute(
+      'INSERT INTO tb_alunos (nome, data_nascimento) VALUES (?, ?)',
+      [aluno.nome, aluno.dataNascimento],
     );
+    return db.lastInsertRowId; // Retorna o ID da última inserção
+  }
 
-    if (maps.isEmpty) return null;
+  Aluno? getAluno(int id) {
+    final result = db.select(
+      'SELECT id, nome, data_nascimento FROM tb_alunos WHERE id = ?',
+      [id],
+    );
+    if (result.isEmpty) return null;
 
+    final row = result.first;
     return Aluno(
-      id: maps.first['id'] as int,
-      nome: maps.first['nome'] as String,
-      dataNascimento: maps.first['data_nascimento'] as String,
+      id: row['id'] as int,
+      nome: row['nome'] as String,
+      dataNascimento: row['data_nascimento'] as String,
     );
   }
 
-  Future<List<Aluno>> getAllAlunos() async {
-    final db = await database;
-    final maps = await db.query('TB_ALUNOS');
-
-    return List.generate(maps.length, (i) {
+  List<Aluno> getAllAlunos() {
+    final result = db.select('SELECT id, nome, data_nascimento FROM tb_alunos');
+    return result.map((row) {
       return Aluno(
-        id: maps[i]['id'] as int,
-        nome: maps[i]['nome'] as String,
-        dataNascimento: maps[i]['data_nascimento'] as String,
+        id: row['id'] as int,
+        nome: row['nome'] as String,
+        dataNascimento: row['data_nascimento'] as String,
       );
-    });
+    }).toList();
   }
 
-  Future<int> updateAluno(Aluno aluno) async {
-    final db = await database;
-    return await db.update(
-      'TB_ALUNOS',
-      aluno.toMap(),
-      where: 'id = ?',
-      whereArgs: [aluno.id],
+  int updateAluno(Aluno aluno) {
+    db.execute(
+      'UPDATE tb_alunos SET nome = ?, data_nascimento = ? WHERE id = ?',
+      [aluno.nome, aluno.dataNascimento, aluno.id],
     );
+    return db.getUpdatedRows(); // Retorna o número de linhas afetadas
   }
 
-  Future<int> deleteAluno(int id) async {
-    final db = await database;
-    return await db.delete(
-      'TB_ALUNOS',
-      where: 'id = ?',
-      whereArgs: [id],
+  int deleteAluno(int id) {
+    db.execute(
+      'DELETE FROM tb_alunos WHERE id = ?',
+      [id],
     );
+    return db.getUpdatedRows(); // Retorna o número de linhas afetadas
+  }
+
+  void close() {
+    db.dispose();
   }
 }
 
-void main() async {
-  // Inicializar o banco de dados
-  final db = AlunoDatabase.instance;
+void main() {
+  final db = AlunoDatabase.initialize('aluno.db');
 
-  // Inserir alunos
-  final aluno1 = Aluno(nome: 'Pablo', dataNascimento: '1989-05-25');
-  final alunoId1 = await db.insertAluno(aluno1);
+  // Limpar tabela antes de começar
+  db.clearTable();
 
-  final aluno2 = Aluno(nome: 'Márcia', dataNascimento: '1820-08-17');
-  final alunoId2 = await db.insertAluno(aluno2);
+  // Adicionando o aluno Pablo
+  final pablo = Aluno(nome: 'Pablo', dataNascimento: '1989-05-25');
+  final pabloId = db.insertAluno(pablo);
 
-  // Buscar aluno pelo ID
-  Aluno? retrievedAluno = await db.getAluno(alunoId1);
-  print('Aluno recuperado: ${retrievedAluno ?? "Não encontrado"}');
-
-  retrievedAluno = await db.getAluno(alunoId2);
-  print('Aluno recuperado: ${retrievedAluno ?? "Não encontrado"}');
-
-  // Atualizar dados de um aluno
-  if (retrievedAluno != null) {
-    retrievedAluno.nome = 'Márcia Fonseca';
-    await db.updateAluno(retrievedAluno);
+  // Atualizando o nome de Pablo para Pablo Busatto
+  final alunoAtualizado = db.getAluno(pabloId);
+  if (alunoAtualizado != null) {
+    alunoAtualizado.nome = 'Pablo Busatto';
+    db.updateAluno(alunoAtualizado);
+    print('Aluno atualizado: $alunoAtualizado');
   }
 
-  // Buscar todos os alunos
-  List<Aluno> alunos = await db.getAllAlunos();
+  // Adicionando a aluna Márcia Fonseca
+  final marcia = Aluno(nome: 'Márcia Fonseca', dataNascimento: '1990-10-10');
+  db.insertAluno(marcia);
+
+  // Recuperando e exibindo todos os alunos
+  final alunos = db.getAllAlunos();
   print('Todos os alunos: $alunos');
 
-  // Deletar um aluno
-  if (alunoId1 != null) {
-    await db.deleteAluno(alunoId1);
-    print('Aluno com ID $alunoId1 deletado.');
-  }
+  // Encerrando a conexão com o banco de dados
+  db.close();
 }
