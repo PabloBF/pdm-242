@@ -1,5 +1,2 @@
-Implementar uma aplicação com tres telas (produtos, clientes e pedidos). Usar um mecanismo de navegação na seguinte sequência:
-
-1. Mostrar os produtos
-2. Mostrar os clientes
-3. Mostrar os pedidos
+# app_tres_telas
+Repositório criado para trabalho da disciplina PDM-242
