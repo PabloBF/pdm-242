@@ -56,7 +56,7 @@ class PedidosPage extends StatelessWidget {
               // Lista de pedidos (mock ou banco de dados)
               PedidoItem(
                 imagem:
-                    'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/esp32.webp',
+                    'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/esp32.webp',
                 cliente: 'Homer Simpson',
                 produto: 'Esp32',
                 quantidade: 2,
@@ -65,7 +65,7 @@ class PedidosPage extends StatelessWidget {
               ),
               PedidoItem(
                 imagem:
-                    'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/fonte5v.webp',
+                    'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/fonte5v.webp',
                 cliente: 'Marge Simpson',
                 produto: 'Fonte 5v',
                 quantidade: 1,
@@ -74,7 +74,7 @@ class PedidosPage extends StatelessWidget {
               ),
               PedidoItem(
                 imagem:
-                    'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/protoboard830.webp',
+                    'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/protoboard830.webp',
                 cliente: 'Bart Simpson',
                 produto: 'Protoboard',
                 quantidade: 3,
@@ -83,7 +83,7 @@ class PedidosPage extends StatelessWidget {
               ),
               PedidoItem(
                 imagem:
-                    'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/ledVermelho.webp',
+                    'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/ledVermelho.webp',
                 cliente: 'Lisa Simpson',
                 produto: 'Led vermelho',
                 quantidade: 5,

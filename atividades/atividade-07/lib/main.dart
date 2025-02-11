@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/esp32.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/esp32.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/protoboard830.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/protoboard830.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -209,7 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/fonte5v.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/fonte5v.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -262,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/ledVermelho.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/ledVermelho.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -316,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Column(
                       children: [
                         Image.network(
-                      'https://github.com/alenior/IFCE/blob/main/P6/PDM/minha_loja/lib/media/ledVerde.jpeg?raw=true',
+                      'https://github.com/PabloBF/pdm-242/blob/main/atividades/atividade-07/lib/media/ledVerde.jpeg?raw=true',
                       width: 150,
                       height: 150,
                     ),
