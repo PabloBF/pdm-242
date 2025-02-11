@@ -63,7 +63,7 @@ class ClientesPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/homerSimpson.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/homerSimpson.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -97,7 +97,7 @@ class ClientesPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/margeSimpson.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/margeSimpson.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -131,7 +131,7 @@ class ClientesPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/bartSimpson.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/bartSimpson.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -165,7 +165,7 @@ class ClientesPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/lisaSimpson.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/lisaSimpson.webp',
                       width: 150,
                       height: 150,
                     ),
@@ -199,7 +199,7 @@ class ClientesPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Image.network(
-                      'https://raw.githubusercontent.com/alenior/IFCE/refs/heads/main/P6/PDM/minha_loja/lib/media/megSimpson.webp',
+                      'https://raw.githubusercontent.com/PabloBF/pdm-242/refs/heads/main/atividades/atividade-07/lib/media/megSimpson.webp',
                       width: 150,
                       height: 150,
                     ),
