@@ -1,6 +1,11 @@
 # Atividade 8 - Validação de Formulário
 
-Este projeto consiste na criação de um formulário Flutter com funcionalidades de validação para os seguintes campos:
+Este projeto consiste na criação de um formulário Flutter com funcionalidades de validação.
+
+## 🎥 Demonstração
+Veja abaixo um vídeo demonstrando o funcionamento do projeto:
+
+https://github.com/user-attachments/assets/069bd046-1a58-49c7-b08d-56ae145500b5
 
 ## 📌 Requisitos de Validação
 - **Data**: Verificar se uma data informada possui o formato `dd-mm-aaaa` e se a data é válida.
@@ -33,11 +38,6 @@ Este projeto consiste na criação de um formulário Flutter com funcionalidades
    ```sh
    flutter run
    ```
-
-## 🎥 Demonstração
-Veja abaixo um vídeo demonstrando o funcionamento do projeto:
-
-https://github.com/user-attachments/assets/069bd046-1a58-49c7-b08d-56ae145500b5
 
 ## 📜 Licença
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](../LICENSE) para mais detalhes.
